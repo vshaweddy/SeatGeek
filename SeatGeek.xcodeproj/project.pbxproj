@@ -13,6 +13,11 @@
 		E32B94C525E2059A00576FC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B94C325E2059A00576FC8 /* LaunchScreen.storyboard */; };
 		E32B94D425E20AFE00576FC8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94D325E20AFE00576FC8 /* MainViewController.swift */; };
 		E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */; };
+		E32B94E325E223F800576FC8 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E225E223F800576FC8 /* Event.swift */; };
+		E32B94E625E2248300576FC8 /* Dummy.json in Resources */ = {isa = PBXBuildFile; fileRef = E32B94E525E2248300576FC8 /* Dummy.json */; };
+		E32B94E925E2260900576FC8 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E825E2260900576FC8 /* Venue.swift */; };
+		E32B94EC25E227D200576FC8 /* Performer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EB25E227D200576FC8 /* Performer.swift */; };
+		E32B94EF25E2286700576FC8 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EE25E2286700576FC8 /* EventController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		E32B94C625E2059A00576FC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E32B94D325E20AFE00576FC8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		E32B94E225E223F800576FC8 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		E32B94E525E2248300576FC8 /* Dummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Dummy.json; sourceTree = "<group>"; };
+		E32B94E825E2260900576FC8 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
+		E32B94EB25E227D200576FC8 /* Performer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performer.swift; sourceTree = "<group>"; };
+		E32B94EE25E2286700576FC8 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +69,11 @@
 				E32B94B825E2059900576FC8 /* AppDelegate.swift */,
 				E32B94BA25E2059900576FC8 /* SceneDelegate.swift */,
 				E32B94D325E20AFE00576FC8 /* MainViewController.swift */,
+				E32B94EE25E2286700576FC8 /* EventController.swift */,
+				E32B94E525E2248300576FC8 /* Dummy.json */,
+				E32B94E225E223F800576FC8 /* Event.swift */,
+				E32B94EB25E227D200576FC8 /* Performer.swift */,
+				E32B94E825E2260900576FC8 /* Venue.swift */,
 				E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */,
 				E32B94C125E2059A00576FC8 /* Assets.xcassets */,
 				E32B94C325E2059A00576FC8 /* LaunchScreen.storyboard */,
@@ -124,6 +139,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E32B94E625E2248300576FC8 /* Dummy.json in Resources */,
 				E32B94C525E2059A00576FC8 /* LaunchScreen.storyboard in Resources */,
 				E32B94C225E2059A00576FC8 /* Assets.xcassets in Resources */,
 			);
@@ -137,9 +153,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */,
+				E32B94EC25E227D200576FC8 /* Performer.swift in Sources */,
+				E32B94E925E2260900576FC8 /* Venue.swift in Sources */,
 				E32B94B925E2059900576FC8 /* AppDelegate.swift in Sources */,
 				E32B94D425E20AFE00576FC8 /* MainViewController.swift in Sources */,
 				E32B94BB25E2059900576FC8 /* SceneDelegate.swift in Sources */,
+				E32B94EF25E2286700576FC8 /* EventController.swift in Sources */,
+				E32B94E325E223F800576FC8 /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
