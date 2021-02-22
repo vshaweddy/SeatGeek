@@ -13,11 +13,14 @@
 		E32B94C525E2059A00576FC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B94C325E2059A00576FC8 /* LaunchScreen.storyboard */; };
 		E32B94D425E20AFE00576FC8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94D325E20AFE00576FC8 /* MainViewController.swift */; };
 		E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */; };
-		E32B94E325E223F800576FC8 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E225E223F800576FC8 /* Event.swift */; };
-		E32B94E625E2248300576FC8 /* Dummy.json in Resources */ = {isa = PBXBuildFile; fileRef = E32B94E525E2248300576FC8 /* Dummy.json */; };
+		E32B94E325E223F800576FC8 /* EventRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E225E223F800576FC8 /* EventRepresentation.swift */; };
+		E32B94E625E2248300576FC8 /* dummy.json in Resources */ = {isa = PBXBuildFile; fileRef = E32B94E525E2248300576FC8 /* dummy.json */; };
 		E32B94E925E2260900576FC8 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E825E2260900576FC8 /* Venue.swift */; };
 		E32B94EC25E227D200576FC8 /* Performer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EB25E227D200576FC8 /* Performer.swift */; };
 		E32B94EF25E2286700576FC8 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EE25E2286700576FC8 /* EventController.swift */; };
+		E3F56D8225E329AF002F1BB1 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */; };
+		E3F56D8C25E32B93002F1BB1 /* SeatGeek.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3F56D8925E32B93002F1BB1 /* SeatGeek.xcdatamodeld */; };
+		E3F56D9425E344BD002F1BB1 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F56D9325E344BD002F1BB1 /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,11 +32,15 @@
 		E32B94C625E2059A00576FC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E32B94D325E20AFE00576FC8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
-		E32B94E225E223F800576FC8 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		E32B94E525E2248300576FC8 /* Dummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Dummy.json; sourceTree = "<group>"; };
+		E32B94E225E223F800576FC8 /* EventRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepresentation.swift; sourceTree = "<group>"; };
+		E32B94E525E2248300576FC8 /* dummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummy.json; sourceTree = "<group>"; };
 		E32B94E825E2260900576FC8 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 		E32B94EB25E227D200576FC8 /* Performer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performer.swift; sourceTree = "<group>"; };
 		E32B94EE25E2286700576FC8 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
+		E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		E3F56D8A25E32B93002F1BB1 /* SeatGeek.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SeatGeek.xcdatamodel; sourceTree = "<group>"; };
+		E3F56D8B25E32B93002F1BB1 /* Event.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Event.xcdatamodel; sourceTree = "<group>"; };
+		E3F56D9325E344BD002F1BB1 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,20 +73,55 @@
 		E32B94B725E2059900576FC8 /* SeatGeek */ = {
 			isa = PBXGroup;
 			children = (
+				E3F56D9025E33054002F1BB1 /* Models */,
+				E3910C6825E353E400F8BC5F /* Controllers */,
+				E3910C6925E353F300F8BC5F /* Views */,
+				E3F56D8F25E33044002F1BB1 /* View Controllers */,
 				E32B94B825E2059900576FC8 /* AppDelegate.swift */,
 				E32B94BA25E2059900576FC8 /* SceneDelegate.swift */,
-				E32B94D325E20AFE00576FC8 /* MainViewController.swift */,
-				E32B94EE25E2286700576FC8 /* EventController.swift */,
-				E32B94E525E2248300576FC8 /* Dummy.json */,
-				E32B94E225E223F800576FC8 /* Event.swift */,
-				E32B94EB25E227D200576FC8 /* Performer.swift */,
-				E32B94E825E2260900576FC8 /* Venue.swift */,
-				E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */,
+				E32B94E525E2248300576FC8 /* dummy.json */,
+				E3F56D8925E32B93002F1BB1 /* SeatGeek.xcdatamodeld */,
 				E32B94C125E2059A00576FC8 /* Assets.xcassets */,
 				E32B94C325E2059A00576FC8 /* LaunchScreen.storyboard */,
 				E32B94C625E2059A00576FC8 /* Info.plist */,
 			);
 			path = SeatGeek;
+			sourceTree = "<group>";
+		};
+		E3910C6825E353E400F8BC5F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E32B94EE25E2286700576FC8 /* EventController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E3910C6925E353F300F8BC5F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E3F56D8F25E33044002F1BB1 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E3F56D9325E344BD002F1BB1 /* APIClient.swift */,
+				E32B94D325E20AFE00576FC8 /* MainViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E3F56D9025E33054002F1BB1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */,
+				E32B94E825E2260900576FC8 /* Venue.swift */,
+				E32B94EB25E227D200576FC8 /* Performer.swift */,
+				E32B94E225E223F800576FC8 /* EventRepresentation.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E32B94E625E2248300576FC8 /* Dummy.json in Resources */,
+				E32B94E625E2248300576FC8 /* dummy.json in Resources */,
 				E32B94C525E2059A00576FC8 /* LaunchScreen.storyboard in Resources */,
 				E32B94C225E2059A00576FC8 /* Assets.xcassets in Resources */,
 			);
@@ -152,14 +194,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3F56D8C25E32B93002F1BB1 /* SeatGeek.xcdatamodeld in Sources */,
 				E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */,
 				E32B94EC25E227D200576FC8 /* Performer.swift in Sources */,
 				E32B94E925E2260900576FC8 /* Venue.swift in Sources */,
+				E3F56D8225E329AF002F1BB1 /* CoreDataStack.swift in Sources */,
+				E3F56D9425E344BD002F1BB1 /* APIClient.swift in Sources */,
 				E32B94B925E2059900576FC8 /* AppDelegate.swift in Sources */,
 				E32B94D425E20AFE00576FC8 /* MainViewController.swift in Sources */,
 				E32B94BB25E2059900576FC8 /* SceneDelegate.swift in Sources */,
 				E32B94EF25E2286700576FC8 /* EventController.swift in Sources */,
-				E32B94E325E223F800576FC8 /* Event.swift in Sources */,
+				E32B94E325E223F800576FC8 /* EventRepresentation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +398,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E3F56D8925E32B93002F1BB1 /* SeatGeek.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E3F56D8A25E32B93002F1BB1 /* SeatGeek.xcdatamodel */,
+				E3F56D8B25E32B93002F1BB1 /* Event.xcdatamodel */,
+			);
+			currentVersion = E3F56D8A25E32B93002F1BB1 /* SeatGeek.xcdatamodel */;
+			path = SeatGeek.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E32B94AD25E2059900576FC8 /* Project object */;
 }

@@ -8,7 +8,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    var events = [String]()
+    var events = [EventRepresentation]()
+    var eventController = EventController()
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -20,6 +21,24 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         setupTableView()
+        tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.reuseIdentifier)
+        tableView.dataSource = self
+
+        eventController.fetchEventsFromServer { [weak self] result in
+            switch result {
+            case .success(let events):
+                self?.events = events
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
+
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
     }
 }
 
@@ -53,6 +72,8 @@ extension MainViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EventTableViewCell.reuseIdentifier, for: indexPath) as? EventTableViewCell else {
             fatalError()
         }
+        
+        cell.configureViews(event: events[indexPath.row])
         
         return cell
     }

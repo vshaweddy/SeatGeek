@@ -53,8 +53,10 @@ class EventTableViewCell: UITableViewCell {
     }()
     
     
-    func configureViews() {
+    func configureViews(event: EventRepresentation) {
         setupMainStackView()
+        titleLabel.text = event.title
+        subtitleLabel.text = event.venue.city
     }
     
     private func setupMainStackView() {

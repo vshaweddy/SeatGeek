@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct Venue {
+struct VenueRepresentation: Codable {
+    enum CodingKeys: String, CodingKey {
+        case city
+        case state
+    }
+    
     let city: String
     let state: String
 }
