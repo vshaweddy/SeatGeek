@@ -43,6 +43,9 @@ class EventController {
             }
             
             let decoder = JSONDecoder()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
             do {
                 let eventResponse = try decoder.decode(EventsResponse.self, from: data)
                 completion(.success(eventResponse.events))

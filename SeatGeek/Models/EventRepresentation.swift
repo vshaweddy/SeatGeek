@@ -16,7 +16,7 @@ struct EventRepresentation: Codable {
         case venue
     }
     
-    var date: String
+    var date: Date
     var title: String
     var performers: [PerformerRepresentation]
     var venue: VenueRepresentation

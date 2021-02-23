@@ -39,7 +39,13 @@ class EventTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var subtitleLabel: UILabel = {
+    private lazy var locationLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,20 +54,29 @@ class EventTableViewCell: UITableViewCell {
     private lazy var thumbnailImage: UIImageView = {
         let thumbnaiImage = UIImageView()
         thumbnaiImage.translatesAutoresizingMaskIntoConstraints = false
-        thumbnaiImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        thumbnaiImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
         return thumbnaiImage
+    }()
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy h:mm a"
+        return dateFormatter
     }()
     
     func configureViews(event: EventRepresentation) {
         setupMainStackView()
         titleLabel.text = event.title
-        subtitleLabel.text = event.venue.city
+        locationLabel.text = "\(event.venue.city), \(event.venue.state)"
+
         
         guard let imageURL = event.performers.first?.image else { return }
-        load(urlString: imageURL)
+        loadImage(urlString: imageURL)
+        
+        dateLabel.text = dateFormatter.string(from: event.date)
     }
     
-    func load(urlString: String) {
+    func loadImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {
@@ -74,12 +89,19 @@ class EventTableViewCell: UITableViewCell {
         }
     }
     
+//    func dateFormatter(_ date: String) {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "EEEE, MMM d, yyyy h:mm a"
+//        formatter.timeZone = .current
+//    }
+    
     private func setupMainStackView() {
         contentView.addSubview(mainStackView)
         mainStackView.addArrangedSubview(thumbnailImage)
         mainStackView.addArrangedSubview(verticalStackView)
         verticalStackView.addArrangedSubview(titleLabel)
-        verticalStackView.addArrangedSubview(subtitleLabel)
+        verticalStackView.addArrangedSubview(locationLabel)
+        verticalStackView.addArrangedSubview(dateLabel)
         
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
