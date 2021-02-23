@@ -15,8 +15,8 @@
 		E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */; };
 		E32B94E325E223F800576FC8 /* EventRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E225E223F800576FC8 /* EventRepresentation.swift */; };
 		E32B94E625E2248300576FC8 /* dummy.json in Resources */ = {isa = PBXBuildFile; fileRef = E32B94E525E2248300576FC8 /* dummy.json */; };
-		E32B94E925E2260900576FC8 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E825E2260900576FC8 /* Venue.swift */; };
-		E32B94EC25E227D200576FC8 /* Performer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EB25E227D200576FC8 /* Performer.swift */; };
+		E32B94E925E2260900576FC8 /* VenueRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94E825E2260900576FC8 /* VenueRepresentation.swift */; };
+		E32B94EC25E227D200576FC8 /* PerformerRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EB25E227D200576FC8 /* PerformerRepresentation.swift */; };
 		E32B94EF25E2286700576FC8 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B94EE25E2286700576FC8 /* EventController.swift */; };
 		E3F56D8225E329AF002F1BB1 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */; };
 		E3F56D8C25E32B93002F1BB1 /* SeatGeek.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3F56D8925E32B93002F1BB1 /* SeatGeek.xcdatamodeld */; };
@@ -34,8 +34,8 @@
 		E32B94D725E20EC800576FC8 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		E32B94E225E223F800576FC8 /* EventRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRepresentation.swift; sourceTree = "<group>"; };
 		E32B94E525E2248300576FC8 /* dummy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = dummy.json; sourceTree = "<group>"; };
-		E32B94E825E2260900576FC8 /* Venue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
-		E32B94EB25E227D200576FC8 /* Performer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performer.swift; sourceTree = "<group>"; };
+		E32B94E825E2260900576FC8 /* VenueRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueRepresentation.swift; sourceTree = "<group>"; };
+		E32B94EB25E227D200576FC8 /* PerformerRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformerRepresentation.swift; sourceTree = "<group>"; };
 		E32B94EE25E2286700576FC8 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		E3F56D8A25E32B93002F1BB1 /* SeatGeek.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SeatGeek.xcdatamodel; sourceTree = "<group>"; };
@@ -117,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				E3F56D8125E329AF002F1BB1 /* CoreDataStack.swift */,
-				E32B94E825E2260900576FC8 /* Venue.swift */,
-				E32B94EB25E227D200576FC8 /* Performer.swift */,
+				E32B94E825E2260900576FC8 /* VenueRepresentation.swift */,
+				E32B94EB25E227D200576FC8 /* PerformerRepresentation.swift */,
 				E32B94E225E223F800576FC8 /* EventRepresentation.swift */,
 			);
 			path = Models;
@@ -196,8 +196,8 @@
 			files = (
 				E3F56D8C25E32B93002F1BB1 /* SeatGeek.xcdatamodeld in Sources */,
 				E32B94D825E20EC800576FC8 /* EventTableViewCell.swift in Sources */,
-				E32B94EC25E227D200576FC8 /* Performer.swift in Sources */,
-				E32B94E925E2260900576FC8 /* Venue.swift in Sources */,
+				E32B94EC25E227D200576FC8 /* PerformerRepresentation.swift in Sources */,
+				E32B94E925E2260900576FC8 /* VenueRepresentation.swift in Sources */,
 				E3F56D8225E329AF002F1BB1 /* CoreDataStack.swift in Sources */,
 				E3F56D9425E344BD002F1BB1 /* APIClient.swift in Sources */,
 				E32B94B925E2059900576FC8 /* AppDelegate.swift in Sources */,

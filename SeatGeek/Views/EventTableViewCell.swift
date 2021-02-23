@@ -52,19 +52,34 @@ class EventTableViewCell: UITableViewCell {
         return thumbnaiImage
     }()
     
-    
     func configureViews(event: EventRepresentation) {
         setupMainStackView()
         titleLabel.text = event.title
         subtitleLabel.text = event.venue.city
+        
+        guard let imageURL = event.performers.first?.image else { return }
+        load(urlString: imageURL)
+    }
+    
+    func load(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.thumbnailImage.image = image
+                    }
+                }
+            }
+        }
     }
     
     private func setupMainStackView() {
         contentView.addSubview(mainStackView)
-        mainStackView.addSubview(thumbnailImage)
-        mainStackView.addSubview(verticalStackView)
-        verticalStackView.addSubview(titleLabel)
-        verticalStackView.addSubview(subtitleLabel)
+        mainStackView.addArrangedSubview(thumbnailImage)
+        mainStackView.addArrangedSubview(verticalStackView)
+        verticalStackView.addArrangedSubview(titleLabel)
+        verticalStackView.addArrangedSubview(subtitleLabel)
         
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
