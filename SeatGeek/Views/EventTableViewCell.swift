@@ -17,7 +17,7 @@ class EventTableViewCell: UITableViewCell {
         view.layoutMargins = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
         view.isLayoutMarginsRelativeArrangement = true
         view.spacing = 4
-        view.distribution = .equalSpacing
+        view.distribution = .fillProportionally
         view.alignment = .leading
         return view
     }()
@@ -54,7 +54,10 @@ class EventTableViewCell: UITableViewCell {
     private lazy var thumbnailImage: UIImageView = {
         let thumbnaiImage = UIImageView()
         thumbnaiImage.translatesAutoresizingMaskIntoConstraints = false
-        thumbnaiImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        thumbnaiImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        thumbnaiImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        thumbnaiImage.layer.cornerRadius = 10
+        thumbnaiImage.clipsToBounds = true
         return thumbnaiImage
     }()
     
@@ -89,10 +92,16 @@ class EventTableViewCell: UITableViewCell {
         }
     }
     
-//    func dateFormatter(_ date: String) {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "EEEE, MMM d, yyyy h:mm a"
-//        formatter.timeZone = .current
+//    func scaleImage(_ image: UIImage) {
+//        guard let image = image else { return }
+//        let targetSize = CGSize(width: 100, height: 100)
+//
+//        let widthScaleRatio = targetSize.width / image.size.width
+//        let heightScaleRatio = targetSize.height / image.size.height
+//
+//        let scaleFactor = min(widthScaleRatio, heightScaleRatio)
+//
+//        let
 //    }
     
     private func setupMainStackView() {
