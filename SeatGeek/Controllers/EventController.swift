@@ -29,7 +29,7 @@ class EventController {
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let response = response as? HTTPURLResponse,
-               response.statusCode != 403 {
+               response.statusCode != 200 {
                 completion(.failure(.badAuth))
             }
             
@@ -68,10 +68,9 @@ class EventController {
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let response = response as? HTTPURLResponse,
-               response.statusCode != 403 {
+               response.statusCode != 200 {
                 completion(.failure(.badAuth))
             }
             
@@ -85,7 +84,9 @@ class EventController {
             }
             
             let decoder = JSONDecoder()
-            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
             do {
                 let itemSearch = try decoder.decode(EventsResponse.self, from: data)
                 completion(.success(itemSearch.events))

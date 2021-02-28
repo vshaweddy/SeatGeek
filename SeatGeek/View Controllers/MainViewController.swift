@@ -9,6 +9,8 @@ import UIKit
 
 class MainViewController: UIViewController {
     var events = [EventRepresentation]()
+    var searchResults = [EventRepresentation]()
+    var isActive = false
     var eventController = EventController()
     
     let tableView: UITableView = {
@@ -20,6 +22,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureSeachController()
         setupTableView()
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.reuseIdentifier)
         tableView.dataSource = self
@@ -33,10 +36,8 @@ class MainViewController: UIViewController {
                     self?.tableView.reloadData()
                 }
 
-                break
             case .failure(let error):
                 print(error)
-                break
             }
         }
     }
@@ -65,7 +66,7 @@ extension MainViewController: UITableViewDelegate {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        return self.isActive ? searchResults.count : events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,8 +74,50 @@ extension MainViewController: UITableViewDataSource {
             fatalError()
         }
         
-        cell.configureViews(event: events[indexPath.row])
+        let event = self.isActive ? searchResults[indexPath.row] : events[indexPath.row]
+        
+        cell.configureViews(event: event)
         
         return cell
+    }
+}
+
+extension MainViewController {
+    func configureSeachController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
+}
+
+extension MainViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if searchController.isActive {
+            guard let text = searchController.searchBar.text, !text.isEmpty else {
+                self.isActive = false
+                self.tableView.reloadData()
+                return
+            }
+            
+            self.isActive = true
+            eventController.searchQuery(with: text) { [weak self] result in
+                switch result {
+                case .success(let results):
+                    self?.searchResults = results
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.tableView.reloadData()
+                    }
+
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } else {
+            self.isActive = false
+            tableView.reloadData()
+        }
     }
 }
