@@ -64,6 +64,7 @@ class EventTableViewCell: UITableViewCell {
         thumbnaiImage.widthAnchor.constraint(equalToConstant: 80).isActive = true
         thumbnaiImage.layer.cornerRadius = 10
         thumbnaiImage.clipsToBounds = true
+        thumbnaiImage.contentMode = .scaleAspectFill
         return thumbnaiImage
     }()
     

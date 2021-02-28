@@ -26,6 +26,7 @@ class MainViewController: UIViewController {
         setupTableView()
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.reuseIdentifier)
         tableView.dataSource = self
+        tableView.delegate = self
 
         eventController.fetchEventsFromServer { [weak self] result in
             switch result {
@@ -60,9 +61,7 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: UITableViewDelegate {
-    
-}
+extension MainViewController: UITableViewDelegate {}
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,6 +78,13 @@ extension MainViewController: UITableViewDataSource {
         cell.configureViews(event: event)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.event = events[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
 }
 
