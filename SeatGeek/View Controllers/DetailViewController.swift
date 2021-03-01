@@ -116,10 +116,15 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupMainStackView()
         navigationController?.navigationBar.isHidden = true
+        self.navigationItem.setHidesBackButton(true, animated: true)
         favoriteButton.addAction(UIAction(handler: { [weak self] _ in
             self?.favoriteTapped()
         }), for: .primaryActionTriggered)
         fetchFavoriteStatus()
+        
+        backButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.backButtonTapped()
+        }), for: .primaryActionTriggered)
 
         if let event = event {
             guard let imageURL = event.performers.first?.image else { return }
@@ -129,6 +134,12 @@ class DetailViewController: UIViewController {
             navigationTitleLabel.text = event.title
         }
         view.backgroundColor = .systemBackground
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.isHidden = false
     }
     
     private func favoriteTapped() {
@@ -161,7 +172,10 @@ class DetailViewController: UIViewController {
         } catch {
             print("Error fetching favorite")
         }
-        
+    }
+    
+    private func backButtonTapped() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     private func setupMainStackView() {
