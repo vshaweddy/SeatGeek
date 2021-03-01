@@ -14,10 +14,12 @@ struct EventRepresentation: Codable {
         case title
         case performers
         case venue
+        case id
     }
     
     var date: Date
     var title: String
     var performers: [PerformerRepresentation]
     var venue: VenueRepresentation
+    var id: Int64
 }

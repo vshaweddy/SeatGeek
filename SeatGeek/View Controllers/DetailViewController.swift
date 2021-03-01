@@ -6,9 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController {
     var event: EventRepresentation?
+    private var favorite: FavoriteEvent? {
+        didSet {
+            let image = favorite == nil ? "heart" : "heart.fill"
+            favoriteButton.setImage(UIImage(systemName: image), for: .normal)
+        }
+    }
     
     private lazy var mainStackView: UIStackView = {
         let view = UIStackView()
@@ -109,8 +116,11 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupMainStackView()
         navigationController?.navigationBar.isHidden = true
+        favoriteButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.favoriteTapped()
+        }), for: .primaryActionTriggered)
+        fetchFavoriteStatus()
 
-        
         if let event = event {
             guard let imageURL = event.performers.first?.image else { return }
             loadImage(urlString: imageURL)
@@ -119,6 +129,39 @@ class DetailViewController: UIViewController {
             navigationTitleLabel.text = event.title
         }
         view.backgroundColor = .systemBackground
+    }
+    
+    private func favoriteTapped() {
+        let context = CoreDataStack.shared.mainContext
+        if let favorite = favorite {
+            context.delete(favorite)
+            self.favorite = nil
+        } else {
+            guard let id = event?.id else { return }
+            let favoriteEvent = FavoriteEvent(context: context)
+            favoriteEvent.eventId = id
+            self.favorite = favoriteEvent
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func fetchFavoriteStatus() {
+        guard let id = event?.id else { return }
+        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K == %i", "eventId", id)
+        let context = CoreDataStack.shared.mainContext
+        do {
+            let favorites = try context.fetch(fetchRequest)
+            self.favorite = favorites.first
+        } catch {
+            print("Error fetching favorite")
+        }
+        
     }
     
     private func setupMainStackView() {
@@ -147,9 +190,7 @@ class DetailViewController: UIViewController {
             horizontalStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             verticalStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 12),
-            verticalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -12),
-            
-            
+            verticalStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -12),    
         ])
     }
     
