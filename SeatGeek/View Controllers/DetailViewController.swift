@@ -10,6 +10,7 @@ import CoreData
 
 class DetailViewController: UIViewController {
     var event: EventRepresentation?
+    var eventController: EventController?
     private var favorite: FavoriteEvent? {
         didSet {
             let image = favorite == nil ? "heart" : "heart.fill"
@@ -21,7 +22,7 @@ class DetailViewController: UIViewController {
         let view = UIStackView()
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layoutMargins = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
+        view.layoutMargins = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         view.isLayoutMarginsRelativeArrangement = true
         view.spacing = 10
         return view
@@ -60,12 +61,13 @@ class DetailViewController: UIViewController {
         let favoriteButton = UIButton()
         favoriteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        favoriteButton.tintColor = .red
         return favoriteButton
     }()
     
     private lazy var separatorLine: UIView = {
         let line = UIView()
-        line.backgroundColor = .systemGray
+        line.backgroundColor = UIColor(red: 228/255, green: 233/255, blue: 237/255, alpha: 2)
         line.heightAnchor.constraint(equalToConstant: 1).isActive = true
         line.translatesAutoresizingMaskIntoConstraints = false
         return line
@@ -120,7 +122,7 @@ class DetailViewController: UIViewController {
         favoriteButton.addAction(UIAction(handler: { [weak self] _ in
             self?.favoriteTapped()
         }), for: .primaryActionTriggered)
-        fetchFavoriteStatus()
+//        fetchFavoriteStatus()
         
         backButton.addAction(UIAction(handler: { [weak self] _ in
             self?.backButtonTapped()
@@ -132,6 +134,7 @@ class DetailViewController: UIViewController {
             titleLabel.text = dateFormatter.string(from: event.date)
             locationLabel.text = "\(event.venue.city), \(event.venue.state)"
             navigationTitleLabel.text = event.title
+            favorite = eventController?.fetchFavoriteStatus(for: event).first
         }
         view.backgroundColor = .systemBackground
     }
@@ -161,17 +164,17 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func fetchFavoriteStatus() {
-        guard let id = event?.id else { return }
-        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "%K == %i", "eventId", id)
-        let context = CoreDataStack.shared.mainContext
-        do {
-            let favorites = try context.fetch(fetchRequest)
-            self.favorite = favorites.first
-        } catch {
-            print("Error fetching favorite")
-        }
+    private func checkFavorite() {
+//        guard let id = event?.id else { return }
+//        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "%K == %i", "eventId", id)
+//        let context = CoreDataStack.shared.mainContext
+//        do {
+//            let favorites = try context.fetch(fetchRequest)
+//            self.favorite = favorites.first
+//        } catch {
+//            print("Error fetching favorite")
+//        }
     }
     
     private func backButtonTapped() {

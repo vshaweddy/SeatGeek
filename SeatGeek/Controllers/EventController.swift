@@ -97,4 +97,30 @@ class EventController {
             }
         }.resume()
     }
+    
+    func fetchFavoriteStatus(for event: EventRepresentation) -> [FavoriteEvent] {
+        let id = event.id
+        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K == %i", "eventId", id)
+        let context = CoreDataStack.shared.mainContext
+        do {
+            let favorites = try context.fetch(fetchRequest)
+            return favorites
+        } catch {
+            print("Error fetching favorite")
+            return []
+        }
+    }
+    
+    func fetchFavorites() -> [FavoriteEvent] {
+        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
+        let context = CoreDataStack.shared.mainContext
+        do {
+            let favorites = try context.fetch(fetchRequest)
+            return favorites
+        } catch {
+            print("Error fetching favorite")
+            return []
+        }
+    }
 }

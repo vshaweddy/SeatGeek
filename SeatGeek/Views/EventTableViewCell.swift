@@ -14,7 +14,7 @@ class EventTableViewCell: UITableViewCell {
         let view = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layoutMargins = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
+        view.layoutMargins = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         view.isLayoutMarginsRelativeArrangement = true
         view.spacing = 10
         view.distribution = .fillProportionally
@@ -26,7 +26,7 @@ class EventTableViewCell: UITableViewCell {
         let view = UIStackView()
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layoutMargins = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
+        view.layoutMargins = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
         view.spacing = 8
         view.distribution = .equalSpacing
         view.alignment = .leading
@@ -68,17 +68,38 @@ class EventTableViewCell: UITableViewCell {
         return thumbnaiImage
     }()
     
+    private lazy var favoriteIcon: UIImageView = {
+        let icon = UIImageView(image: UIImage(systemName: "heart.fill"))
+        icon.tintColor = .red
+        icon.alpha = 0
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        return icon
+    }()
+    
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy h:mm a"
         return dateFormatter
     }()
     
-    func configureViews(event: EventRepresentation) {
+    override func prepareForReuse() {
+        self.favoriteIcon.alpha = 0
+        self.favoriteIcon.isHidden = true
+    }
+    
+    func configureViews(event: EventRepresentation, isFavorite: Bool) {
         setupMainStackView()
         titleLabel.text = event.title
         locationLabel.text = "\(event.venue.city), \(event.venue.state)"
+        
+        favoriteIcon.isHidden = !isFavorite
 
+        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
+            self?.favoriteIcon.isHidden = !isFavorite
+            self?.favoriteIcon.alpha = 1
+        }
         
         guard let imageURL = event.performers.first?.image else { return }
         loadImage(urlString: imageURL)
@@ -101,6 +122,7 @@ class EventTableViewCell: UITableViewCell {
     
     private func setupMainStackView() {
         contentView.addSubview(mainStackView)
+        contentView.addSubview(favoriteIcon)
         mainStackView.addArrangedSubview(thumbnailImage)
         mainStackView.addArrangedSubview(verticalStackView)
         verticalStackView.addArrangedSubview(titleLabel)
@@ -111,7 +133,10 @@ class EventTableViewCell: UITableViewCell {
             mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            favoriteIcon.leadingAnchor.constraint(equalTo: thumbnailImage.leadingAnchor, constant: -8),
+            favoriteIcon.topAnchor.constraint(equalTo: thumbnailImage.topAnchor, constant: -8)
         ])
     }
 }

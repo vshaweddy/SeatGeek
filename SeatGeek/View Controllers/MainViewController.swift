@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     var searchResults = [EventRepresentation]()
     var isActive = false
     var eventController = EventController()
+    var favoriteIdsSet = Set<Int64>()
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -23,6 +24,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         configureSeachController()
+        navigationBarColor()
         setupTableView()
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.reuseIdentifier)
         tableView.dataSource = self
@@ -42,6 +44,16 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        favoriteIdsSet = Set(eventController.fetchFavorites().map { event in event.eventId })
+        tableView.reloadData()
+
+//        let searchBar = UISearchBar()
+//        searchBar.backgroundColor = .red
+//        searchBar.searchTextField.backgroundColor = .black
+    }
 }
 
 extension MainViewController {
@@ -59,6 +71,16 @@ extension MainViewController {
     private func configureViewController() {
         view.backgroundColor = .systemBackground
     }
+    
+    private func navigationBarColor() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(red: 34/255, green: 49/255, blue: 63/255, alpha: 1)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+    }
 }
 
 extension MainViewController: UITableViewDelegate {}
@@ -74,8 +96,8 @@ extension MainViewController: UITableViewDataSource {
         }
         
         let event = self.isActive ? searchResults[indexPath.row] : events[indexPath.row]
-        
-        cell.configureViews(event: event)
+        let isFavorite = favoriteIdsSet.contains(event.id)
+        cell.configureViews(event: event, isFavorite: isFavorite)
         
         return cell
     }
@@ -83,6 +105,7 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.event = events[indexPath.row]
+        vc.eventController = eventController
         navigationController?.pushViewController(vc, animated: true)
         
     }
