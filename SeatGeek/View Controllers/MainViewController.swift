@@ -125,7 +125,11 @@ extension MainViewController {
     func configureSeachController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "Search events"
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.searchTextField.leftView?.tintColor = .white
+        searchController.searchBar.searchTextField.tintColor = .white
+        searchController.searchBar.tintColor = .white
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
     }
