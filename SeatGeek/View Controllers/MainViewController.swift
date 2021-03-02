@@ -15,6 +15,10 @@ class MainViewController: UIViewController {
     var eventController = EventController()
     var favoriteIdsSet = Set<Int64>()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     lazy var fetchedResultsController: NSFetchedResultsController<FavoriteEvent> = {
         let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
         let sort = NSSortDescriptor(key: #keyPath(FavoriteEvent.eventId), ascending: true)

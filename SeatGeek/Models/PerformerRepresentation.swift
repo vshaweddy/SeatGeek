@@ -8,9 +8,5 @@
 import Foundation
 
 struct PerformerRepresentation: Codable {
-    enum CodingKeys: String, CodingKey {
-        case image
-    }
-    
     var image: String
 }
