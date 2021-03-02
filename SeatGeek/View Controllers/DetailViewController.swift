@@ -164,19 +164,6 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func checkFavorite() {
-//        guard let id = event?.id else { return }
-//        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "%K == %i", "eventId", id)
-//        let context = CoreDataStack.shared.mainContext
-//        do {
-//            let favorites = try context.fetch(fetchRequest)
-//            self.favorite = favorites.first
-//        } catch {
-//            print("Error fetching favorite")
-//        }
-    }
-    
     private func backButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
     }

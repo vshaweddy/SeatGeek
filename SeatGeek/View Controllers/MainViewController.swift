@@ -5,6 +5,7 @@
 //  Created by Vici Shaweddy on 2/20/21.
 //
 
+import CoreData
 import UIKit
 
 class MainViewController: UIViewController {
@@ -14,6 +15,15 @@ class MainViewController: UIViewController {
     var eventController = EventController()
     var favoriteIdsSet = Set<Int64>()
     
+    lazy var fetchedResultsController: NSFetchedResultsController<FavoriteEvent> = {
+        let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
+        let sort = NSSortDescriptor(key: #keyPath(FavoriteEvent.eventId), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
+    }()
+
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +39,7 @@ class MainViewController: UIViewController {
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: EventTableViewCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        fetchedResultsController.delegate = self
 
         eventController.fetchEventsFromServer { [weak self] result in
             switch result {
@@ -43,16 +54,16 @@ class MainViewController: UIViewController {
                 print(error)
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        favoriteIdsSet = Set(eventController.fetchFavorites().map { event in event.eventId })
-        tableView.reloadData()
-
-//        let searchBar = UISearchBar()
-//        searchBar.backgroundColor = .red
-//        searchBar.searchTextField.backgroundColor = .black
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("Fetching error: \(error), \(error.userInfo)")
+        }
+        
+        if let fetchFavorites = fetchedResultsController.fetchedObjects {
+            favoriteIdsSet = Set(fetchFavorites.map{ $0.eventId })
+        }
     }
 }
 
@@ -107,7 +118,6 @@ extension MainViewController: UITableViewDataSource {
         vc.event = events[indexPath.row]
         vc.eventController = eventController
         navigationController?.pushViewController(vc, animated: true)
-        
     }
 }
 
@@ -148,5 +158,13 @@ extension MainViewController: UISearchResultsUpdating {
             self.isActive = false
             tableView.reloadData()
         }
+    }
+}
+
+extension MainViewController: NSFetchedResultsControllerDelegate {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard let fetchFavorites = controller.fetchedObjects as? [FavoriteEvent] else { return }
+        favoriteIdsSet = Set(fetchFavorites.map { $0.eventId })
+        tableView.reloadData()
     }
 }

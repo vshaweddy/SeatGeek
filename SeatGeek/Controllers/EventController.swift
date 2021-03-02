@@ -5,8 +5,8 @@
 //  Created by Vici Shaweddy on 2/21/21.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 private struct EventsResponse: Decodable {
     let events: [EventRepresentation]

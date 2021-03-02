@@ -95,11 +95,7 @@ class EventTableViewCell: UITableViewCell {
         locationLabel.text = "\(event.venue.city), \(event.venue.state)"
         
         favoriteIcon.isHidden = !isFavorite
-
-        UIView.animate(withDuration: 1, delay: 0.2, options: .curveEaseIn) { [weak self] in
-            self?.favoriteIcon.isHidden = !isFavorite
-            self?.favoriteIcon.alpha = 1
-        }
+        favoriteIcon.alpha = 1
         
         guard let imageURL = event.performers.first?.image else { return }
         loadImage(urlString: imageURL)
