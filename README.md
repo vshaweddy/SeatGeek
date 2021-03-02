@@ -4,6 +4,8 @@
 
 SeatGeek app lets you find current events around the country.
 
+![Screenshot](SGHome.png)
+
 ## Features
 
 - Search event by keyword
@@ -20,4 +22,4 @@ Run it on Xcode and in Simulator
 
 ## Author
 
-- Vici Shaweddy @vicishaweddy
+- Vici Shaweddy [@vicishaweddy](https://twitter.com/vicishaweddy)
