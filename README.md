@@ -1,1 +1,3 @@
 # SeatGeek
+
+## About SeatGeek
