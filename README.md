@@ -20,4 +20,4 @@ Run it on Xcode and in Simulator
 
 ## Author
 
-- Vici Shaweddy @vicishaweddy
+- Vici Shaweddy [@vicishaweddy](https://twitter.com/vicishaweddy)
