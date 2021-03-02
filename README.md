@@ -4,6 +4,8 @@
 
 SeatGeek app lets you find current events around the country.
 
+![Screenshot](SGHome.png)
+
 ## Features
 
 - Search event by keyword
