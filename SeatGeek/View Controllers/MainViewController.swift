@@ -109,6 +109,7 @@ extension MainViewController: UITableViewDataSource {
         let event = self.isActive ? searchResults[indexPath.row] : events[indexPath.row]
         let isFavorite = favoriteIdsSet.contains(event.id)
         cell.configureViews(event: event, isFavorite: isFavorite)
+        cell.selectionStyle = .none
         
         return cell
     }
