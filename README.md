@@ -4,14 +4,14 @@
 
 SeatGeek app lets you find current events around the country.
 
-<img src="SGHome.png" width="400">
+<img src="images/SGHome.png" width="400">
 
 ## Features
 
 - Search event by keyword
 - Favorite events
 
-<img src="SGSearch.png" width="200"> <img src="SGFavorite.png" width="200"> <img src="SGDetail.png" width="200">
+<img src="images/SGSearch.png" width="200"> <img src="images/SGFavorited.png" width="200"> <img src="images/SGDetailView.png" width="200">
 
 ## Installing
 
