@@ -8,7 +8,7 @@
 import UIKit
 
 class NavigationController: UINavigationController {
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        topViewController?.preferredStatusBarStyle ?? .default
-    }
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    topViewController?.preferredStatusBarStyle ?? .default
+  }
 }

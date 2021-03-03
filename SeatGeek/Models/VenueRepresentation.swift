@@ -8,6 +8,6 @@
 import Foundation
 
 struct VenueRepresentation: Codable {
-    let city: String
-    let state: String
+  let city: String
+  let state: String
 }
