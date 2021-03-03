@@ -8,5 +8,5 @@
 import Foundation
 
 struct PerformerRepresentation: Codable {
-    var image: String
+    let image: String
 }

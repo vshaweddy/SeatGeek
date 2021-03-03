@@ -9,8 +9,6 @@ import UIKit
 import CoreData
 
 class DetailViewController: UIViewController {
-    var event: EventRepresentation?
-    var eventController: EventController?
     private var favorite: FavoriteEvent? {
         didSet {
             let image = favorite == nil ? "heart" : "heart.fill"
@@ -114,6 +112,12 @@ class DetailViewController: UIViewController {
         return dateFormatter
     }()
     
+    // The event passed from main
+    var event: EventRepresentation?
+    
+    // The event controller passed from main
+    var eventController: EventController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainStackView()
@@ -122,7 +126,6 @@ class DetailViewController: UIViewController {
         favoriteButton.addAction(UIAction(handler: { [weak self] _ in
             self?.favoriteTapped()
         }), for: .primaryActionTriggered)
-//        fetchFavoriteStatus()
         
         backButton.addAction(UIAction(handler: { [weak self] _ in
             self?.backButtonTapped()
@@ -141,9 +144,10 @@ class DetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         navigationController?.navigationBar.isHidden = false
     }
+    
+    // MARK: - Private
     
     private func favoriteTapped() {
         let context = CoreDataStack.shared.mainContext
@@ -198,7 +202,7 @@ class DetailViewController: UIViewController {
         ])
     }
     
-    func loadImage(urlString: String) {
+    private func loadImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {

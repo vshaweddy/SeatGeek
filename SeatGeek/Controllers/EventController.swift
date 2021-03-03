@@ -23,15 +23,26 @@ enum NetworkError: Error {
     case noDecode
 }
 
-private struct EventsResponse: Decodable {
+struct EventsResponse: Codable {
     let events: [EventRepresentation]
 }
 
-class EventController {
+final class EventController {
+    private let session: URLSession
     private var baseURL = URLComponents(string: "https://api.seatgeek.com/2/events")!
     private let clientID = "MTQ0ODM5NXwxNjEzOTI1ODA1LjMwNzA3NzQ"
-    var events = [EventRepresentation]()
+    private var events = [EventRepresentation]()
     
+    /// Creates an instance of EventController
+    ///
+    /// - Parameter session: An optional session
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+    }
+    
+    /// Fetch the events from SeatGeek API
+    ///
+    /// - Parameter completion: Completion handler
     func fetchEventsFromServer(completion: @escaping (Result<[EventRepresentation], NetworkError>) -> Void) {
         baseURL.queryItems = [
             URLQueryItem(name: "client_id", value: clientID)
@@ -42,7 +53,7 @@ class EventController {
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        session.dataTask(with: request) { (data, response, error) in
             if let response = response as? HTTPURLResponse,
                response.statusCode != 200 {
                 completion(.failure(.badAuth))
@@ -72,7 +83,12 @@ class EventController {
         }.resume()
     }
     
-    func searchQuery(with searchTerm: String, completion: @escaping (Result<[EventRepresentation], NetworkError>) -> Void) {
+    /// Search with a query
+    ///
+    /// - Parameters:
+    ///   - searchTerm: The search query
+    ///   - completion: The completion handler
+    func search(with searchTerm: String, completion: @escaping (Result<[EventRepresentation], NetworkError>) -> Void) {
         baseURL.queryItems = [
             URLQueryItem(name: "client_id", value: clientID),
             URLQueryItem(name: "q", value: searchTerm)
@@ -83,7 +99,7 @@ class EventController {
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        session.dataTask(with: request) { (data, response, error) in
             if let response = response as? HTTPURLResponse,
                response.statusCode != 200 {
                 completion(.failure(.badAuth))
@@ -113,6 +129,10 @@ class EventController {
         }.resume()
     }
     
+    /// Fetches the local favorite status for an event
+    ///
+    /// - Parameter event: The event object
+    /// - Returns: A list of favorite events
     func fetchFavoriteStatus(for event: EventRepresentation) -> [FavoriteEvent] {
         let id = event.id
         let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
@@ -127,6 +147,9 @@ class EventController {
         }
     }
     
+    /// Fetches the user's local favorites
+    ///
+    /// - Returns: A list of favorite events
     func fetchFavorites() -> [FavoriteEvent] {
         let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
         let context = CoreDataStack.shared.mainContext

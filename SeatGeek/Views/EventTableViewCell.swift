@@ -8,7 +8,7 @@
 import UIKit
 
 class EventTableViewCell: UITableViewCell {
-    public static let reuseIdentifier = "EventCell"
+    static let reuseIdentifier = "EventCell"
     
     private lazy var mainStackView: UIStackView = {
         let view = UIStackView()
@@ -85,10 +85,17 @@ class EventTableViewCell: UITableViewCell {
     }()
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.favoriteIcon.alpha = 0
         self.favoriteIcon.isHidden = true
     }
     
+    
+    /// Configure the view
+    ///
+    /// - Parameters:
+    ///   - event: The event object
+    ///   - isFavorite: Whether or not the event is a favorite
     func configureViews(event: EventRepresentation, isFavorite: Bool) {
         setupMainStackView()
         titleLabel.text = event.title
@@ -97,13 +104,16 @@ class EventTableViewCell: UITableViewCell {
         favoriteIcon.isHidden = !isFavorite
         favoriteIcon.alpha = 1
         
-        guard let imageURL = event.performers.first?.image else { return }
-        loadImage(urlString: imageURL)
+        if let imageURL = event.performers.first?.image {
+            loadImage(urlString: imageURL)
+        }
         
         dateLabel.text = dateFormatter.string(from: event.date)
     }
     
-    func loadImage(urlString: String) {
+    // MARK: - Private
+    
+    private func loadImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
         DispatchQueue.global().async { [weak self] in
             if let data = try? Data(contentsOf: url) {

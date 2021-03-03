@@ -8,10 +8,8 @@
 import Foundation
 import CoreData
 
-class CoreDataStack {
-    static let shared = CoreDataStack()
-    
-    lazy var container: NSPersistentContainer = {
+final class CoreDataStack {
+    private lazy var container: NSPersistentContainer = {
         let newContainer = NSPersistentContainer(name: "SeatGeek")
         newContainer.loadPersistentStores { _, error in
             guard error == nil else {
@@ -22,10 +20,18 @@ class CoreDataStack {
         return newContainer
     }()
     
+    /// Shared instance
+    static let shared = CoreDataStack()
+    
+    /// Main view context
     var mainContext: NSManagedObjectContext {
         return container.viewContext
     }
     
+    
+    /// Saves the current context
+    ///
+    /// - Parameter context: The managed object context
     func save(context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         context.performAndWait {
             do {

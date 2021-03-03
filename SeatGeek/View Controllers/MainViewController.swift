@@ -8,18 +8,14 @@
 import CoreData
 import UIKit
 
-class MainViewController: UIViewController {
-    var events = [EventRepresentation]()
-    var searchResults = [EventRepresentation]()
-    var isActive = false
-    var eventController = EventController()
-    var favoriteIdsSet = Set<Int64>()
+final class MainViewController: UIViewController {
+    private var events = [EventRepresentation]()
+    private var searchResults = [EventRepresentation]()
+    private var isActive = false
+    private var eventController = EventController()
+    private var favoriteIdsSet = Set<Int64>()
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<FavoriteEvent> = {
+    private lazy var fetchedResultsController: NSFetchedResultsController<FavoriteEvent> = {
         let fetchRequest: NSFetchRequest<FavoriteEvent> = FavoriteEvent.fetchRequest()
         let sort = NSSortDescriptor(key: #keyPath(FavoriteEvent.eventId), ascending: true)
         fetchRequest.sortDescriptors = [sort]
@@ -28,11 +24,15 @@ class MainViewController: UIViewController {
         return fetchedResultsController
     }()
 
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,11 +96,21 @@ extension MainViewController {
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactAppearance = appearance
     }
+    
+    private func configureSeachController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search events"
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.searchTextField.leftView?.tintColor = .white
+        searchController.searchBar.searchTextField.tintColor = .white
+        searchController.searchBar.tintColor = .white
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
 }
 
-extension MainViewController: UITableViewDelegate {}
-
-extension MainViewController: UITableViewDataSource {
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.isActive ? searchResults.count : events.count
     }
@@ -126,20 +136,6 @@ extension MainViewController: UITableViewDataSource {
     }
 }
 
-extension MainViewController {
-    func configureSeachController() {
-        let searchController = UISearchController()
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search events"
-        searchController.searchBar.barStyle = .black
-        searchController.searchBar.searchTextField.leftView?.tintColor = .white
-        searchController.searchBar.searchTextField.tintColor = .white
-        searchController.searchBar.tintColor = .white
-        searchController.obscuresBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-    }
-}
-
 extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if searchController.isActive {
@@ -150,7 +146,7 @@ extension MainViewController: UISearchResultsUpdating {
             }
             
             self.isActive = true
-            eventController.searchQuery(with: text) { [weak self] result in
+            eventController.search(with: text) { [weak self] result in
                 switch result {
                 case .success(let results):
                     self?.searchResults = results
